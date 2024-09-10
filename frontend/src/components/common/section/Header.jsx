@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaSignOutAlt } from "react-icons/fa";
 import Logout from "../section/Logout";
 
 const Header = () => {
@@ -85,7 +85,7 @@ const Header = () => {
           <div className="flex items-center">
             {/* Profile section */}
             {user && (
-              <div className="relative mr-2 md:mr-0" ref={dropdownRef}>
+              <div className="relative mr-2 md:mr-0 " ref={dropdownRef}>
                 <button
                   onClick={toggleDropdown}
                   className="flex items-center justify-center px-4 py-2 rounded-md bg-gray-700 text-white hover:bg-gray-600 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -113,17 +113,13 @@ const Header = () => {
                         className="group flex items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
                         onClick={() => setDropdownOpen(false)}
                       >
-                        <FaUser className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
-                        Profile
+                        View Profile
                       </Link>
                     </div>
                     <div className="py-1">
                       <Logout onLogoutSuccess={handleLogoutSuccess}>
                         {({ logout }) => (
-                          <button
-                            onClick={logout}
-                            className="group flex items-center justify-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
+                          <button onClick={logout}>
                             <FaSignOutAlt className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
                             Logout
                           </button>

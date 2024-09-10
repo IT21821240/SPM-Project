@@ -1,65 +1,78 @@
 /* eslint-disable react/prop-types */
+
 import { Mail, Phone, Edit3, Trash2 } from "lucide-react";
+import bgProfile from "../../../assets/profile-bg.jpg";
 
 const getRandomAvatar = () => {
-  const avatarStyles = ["adventurer", "avataaars"];
-  const style = avatarStyles[Math.floor(Math.random() * avatarStyles.length)];
-  return `https://api.dicebear.com/7.x/${style}/svg?seed=${Math.random()}&backgroundColor=transparent`;
+  return `https://d1rig8ldkblbsy.cloudfront.net/app/uploads/2023/02/02143243/em-headshot-credit-chris-chapman-crop-1675430348-1120x1120.jpg?auto=format%2Ccompress&fit=max&fm=webp&monochrome=29000000&q=75&w=1400`;
 };
 
 const ProfileDetails = ({ user, handleEdit, handleDeleteProfile }) => {
   const avatarUrl = getRandomAvatar();
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="bg-gradient-to-r from-info via-info to-head h-32 sm:h-48"></div>
-        <div className="relative px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:-mt-16">
-            <div className="flex justify-center sm:justify-start flex-shrink-0 -mt-16 sm:mt-0">
-              <img
-                src={avatarUrl}
-                alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-white bg-white shadow-lg"
-              />
+    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative h-52">
+        <img
+          src={bgProfile}
+          alt="Profile background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/70"></div>
+      </div>
+
+      <div className="relative px-8 py-10 -mt-56">
+        <div className="flex flex-col items-center mb-8">
+          <img
+            src={avatarUrl}
+            alt="Profile"
+            className="w-40 h-40 rounded-full border-2 border-info shadow-xl "
+          />
+          <h2 className="text-4xl font-bold text-info mt-8">
+            {user.name || "Bobby Charles"}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-blue-50 rounded-xl p-6 flex items-center space-x-4 transform hover:scale-105 transition-transform duration-300 shadow-md">
+            <div className="bg-blue-500 rounded-full p-3">
+              <Mail className="h-6 w-6 text-white" />
             </div>
-            <div className="mt-6 sm:mt-0 sm:ml-6 text-center sm:text-left space-y-1 sm:pb-4">
-              <h2 className="text-3xl font-bold text-gray-800 mb-8">
-                {user.name || "John Doe"}
-              </h2>
-              <p className="text-gray-500 mb-5">@{user.name || "johndoe"}</p>
+            <div>
+              <p className="text-sm text-blue-500 font-semibold">Email</p>
+              <p className="text-lg text-gray-800">
+                {user.email || "bob@gmail.com"}
+              </p>
+            </div>
+          </div>
+          <div className="bg-green-50 rounded-xl p-6 flex items-center space-x-4 transform hover:scale-105 transition-transform duration-300 shadow-md">
+            <div className="bg-green-500 rounded-full p-3">
+              <Phone className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <p className="text-sm text-green-500 font-semibold">Phone</p>
+              <p className="text-lg text-gray-800">
+                {user.phone || "3232323212"}
+              </p>
             </div>
           </div>
         </div>
-        <div className="px-4 py-5 sm:p-6">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-6">
-            <div className="flex items-center space-x-3 text-gray-600 bg-gray-100 p-3 rounded-lg">
-              <Mail className="h-5 w-5 text-blue-500 flex-shrink-0" />
-              <span className="truncate">
-                {user.email || "john@example.com"}
-              </span>
-            </div>
-            <div className="flex items-center space-x-3 text-gray-600 bg-gray-100 p-3 rounded-lg">
-              <Phone className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <span>{user.phone || "+1 234 567 890"}</span>
-            </div>
-          </div>
-          <div className="ml-40 grid grid-cols-1 sm:grid-cols-3 gap-10 ">
-            <button
-              onClick={handleEdit}
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center space-x-2"
-            >
-              <Edit3 className="h-5 w-5" />
-              <span>Edit</span>
-            </button>
-            <button
-              onClick={handleDeleteProfile}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors duration-300 flex items-center justify-center space-x-2"
-            >
-              <Trash2 className="h-5 w-5" />
-              <span>Delete</span>
-            </button>
-          </div>
+
+        <div className="flex justify-center space-x-6">
+          <button
+            onClick={handleEdit}
+            className="bg-blue-500 text-white py-3 px-8 rounded-xl hover:bg-blue-600 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <Edit3 className="h-5 w-5" />
+            <span className="font-semibold">Edit Profile</span>
+          </button>
+          <button
+            onClick={handleDeleteProfile}
+            className="bg-red-500 text-white py-3 px-8 rounded-xl hover:bg-red-600 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <Trash2 className="h-5 w-5" />
+            <span className="font-semibold">Delete Profile</span>
+          </button>
         </div>
       </div>
     </div>

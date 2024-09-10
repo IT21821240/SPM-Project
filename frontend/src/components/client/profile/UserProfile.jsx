@@ -16,6 +16,7 @@ const UserProfile = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [isOpen, setIsOpen] = useState(false);
   const [actionType, setActionType] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const UserProfile = () => {
         });
       } catch (error) {
         console.error(error);
+        setError("Failed to fetch user profile");
       }
     };
 
@@ -52,8 +54,17 @@ const UserProfile = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+    setError("");
+
     try {
       const userId = localStorage.getItem("userId");
+
+      // Basic validation
+      if (!formData.name || !formData.email || !formData.phone) {
+        setError("All fields are required");
+        return;
+      }
+
       const response = await fetch(
         `http://localhost:3000/api/users/profile/update/${userId}`,
         {
@@ -65,14 +76,19 @@ const UserProfile = () => {
           body: JSON.stringify(formData),
         }
       );
-      if (!response.ok) throw new Error("Failed to update profile");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update profile");
+      }
+
       const data = await response.json();
       setUser(data.user);
       setEditMode(false);
       showNotification("Profile updated successfully", "success");
     } catch (error) {
-      console.error(error);
-      showNotification("Failed to update profile", "error");
+      console.error("Error:", error);
+      setError(error.message || "Failed to update profile");
     }
   };
 
@@ -109,7 +125,7 @@ const UserProfile = () => {
           navigate("/");
         } catch (error) {
           console.error(error);
-          showNotification("Failed to delete profile", "error");
+          setError("Failed to delete profile");
         }
       } else if (actionType === "logout") {
         localStorage.removeItem("token");
