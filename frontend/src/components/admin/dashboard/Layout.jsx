@@ -27,6 +27,8 @@ import styled from "styled-components";
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
+const mainColor = "#c6e6b3"; // Darker shade of #f6ffed
+
 const StyledCard = styled(Card)`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -41,11 +43,12 @@ const StyledCard = styled(Card)`
 const StyledStatistic = styled(Statistic)`
   .ant-statistic-title {
     font-size: 16px;
-    color: #8c8c8c;
+    color: #3f3f3f;
   }
   .ant-statistic-content {
     font-size: 24px;
     font-weight: bold;
+    color: #1e1e1e;
   }
 `;
 
@@ -54,18 +57,28 @@ const CenteredMenu = styled(Menu)`
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  background-color: ${mainColor};
+  color: #3f3f3f;
+
+  .ant-menu-item-selected {
+    background-color: #a8d78f !important;
+  }
+
+  .ant-menu-item:hover {
+    background-color: #b7dea1 !important;
+  }
 `;
 
 const StyledLogoutButton = styled(Button)`
-  background-color: #f5222d;
-  border-color: #f5222d;
+  background-color: #ff4d4f;
+  border-color: #ff4d4f;
   color: white;
   font-weight: bold;
   transition: all 0.3s;
 
   &:hover {
-    background-color: #00534d;
-    border-color: #00534d;
+    background-color: #ff7875;
+    border-color: #ff7875;
     color: white;
   }
 `;
@@ -121,6 +134,7 @@ const CardTitle = styled.h3`
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 8px;
+  color: #3f3f3f;
 `;
 
 const CardDescription = styled.p`
@@ -131,6 +145,13 @@ const CardDescription = styled.p`
 
 const CardButton = styled(Button)`
   align-self: flex-start;
+  background-color: #52c41a;
+  border-color: #52c41a;
+
+  &:hover {
+    background-color: #73d13d;
+    border-color: #73d13d;
+  }
 `;
 
 const FeatureCard = ({
@@ -165,7 +186,7 @@ const Layouts = () => {
   const navigate = useNavigate();
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   const menuItems = [
@@ -186,7 +207,7 @@ const Layouts = () => {
       title: "Identified Diseases",
       value: 28,
       icon: <WarningOutlined style={{ fontSize: 24, color: "#faad14" }} />,
-      color: "#fffbe6",
+      color: "#fff7e6",
     },
     {
       title: "Active Users",
@@ -238,10 +259,11 @@ const Layouts = () => {
           top: 0,
           bottom: 0,
           boxShadow: "2px 0 8px 0 rgba(29,35,41,.05)",
+          backgroundColor: mainColor,
         }}
       >
         <CenteredMenu
-          theme="dark"
+          theme="light"
           mode="inline"
           selectedKeys={[selectedKey]}
           onClick={({ key }) => {
@@ -259,7 +281,7 @@ const Layouts = () => {
         <Header
           style={{
             padding: 0,
-            background: colorBgContainer,
+            background: mainColor,
             position: "sticky",
             top: 0,
             zIndex: 1,
@@ -278,7 +300,11 @@ const Layouts = () => {
                 {
                   className: "trigger",
                   onClick: () => setCollapsed(!collapsed),
-                  style: { fontSize: "18px", cursor: "pointer" },
+                  style: {
+                    fontSize: "18px",
+                    cursor: "pointer",
+                    color: "#52c41a",
+                  },
                 }
               )}
             </Col>
@@ -298,12 +324,12 @@ const Layouts = () => {
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
+            background: "#ffffff",
             borderRadius: borderRadiusLG,
             overflow: "initial",
           }}
         >
-          <Title level={2} style={{ marginBottom: 24 }}>
+          <Title level={2} style={{ marginBottom: 24, color: "#3f3f3f" }}>
             Dashboard Overview
           </Title>
           <Row gutter={[16, 16]}>
