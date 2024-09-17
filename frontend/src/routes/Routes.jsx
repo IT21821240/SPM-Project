@@ -6,6 +6,10 @@ import Detection from "../components/client/detection/Detection";
 import Layout from "../components/admin/dashboard/Layout";
 import Customers from "../components/admin/customers/Customers";
 
+// plant
+import PlantMain from "../components/plant/plantMain";
+import UpdatePlantForm from "../components/plant/UpdatePlantForm";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -15,6 +19,10 @@ const AppRoutes = () => {
       <Route path="/detection" element={<Detection />} />
       <Route path="/admindashboard" element={<Layout />} />
       <Route path="/admindashboard/customers" element={<Customers />} />
+
+      {/* plant */}
+      <Route path="/plant" element={<PlantMain />} />
+      <Route path="/update/:id" element={<UpdatePlantForm />} />
     </Routes>
   );
 };

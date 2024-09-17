@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllPlants, deletePlant } from "../services/plantService.js";
+import { getAllPlants, deletePlant } from "../../services/plantService.js";
 import PlantItem from "./PlantItem";
 
 const PlantList = () => {
