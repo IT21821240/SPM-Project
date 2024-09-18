@@ -21,13 +21,16 @@ import {
   MenuUnfoldOutlined,
   DollarCircleOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Customers from "../../admin/customers/Customers"; // Import the Customers component
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
-const mainColor = "#c6e6b3"; // Darker shade of #f6ffed
+const mainColor = "#001529"; // Bright blue
+const secondaryColor = "#52c41a"; // Green
+const accentColor = "#faad14"; // Yellow
+const dangerColor = "#f5222d"; // Red
 
 const StyledCard = styled(Card)`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -58,20 +61,29 @@ const CenteredMenu = styled(Menu)`
   justify-content: center;
   height: 100%;
   background-color: ${mainColor};
-  color: #3f3f3f;
+  color: white;
 
-  .ant-menu-item-selected {
-    background-color: #a8d78f !important;
+  .ant-menu-item {
+    color: white !important;
   }
 
   .ant-menu-item:hover {
-    background-color: #b7dea1 !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .ant-menu-item-selected {
+    background-color: ${secondaryColor} !important;
+    color: white !important;
+  }
+
+  .anticon {
+    color: white !important;
   }
 `;
 
 const StyledLogoutButton = styled(Button)`
-  background-color: #ff4d4f;
-  border-color: #ff4d4f;
+  background-color: ${dangerColor};
+  border-color: ${dangerColor};
   color: white;
   font-weight: bold;
   transition: all 0.3s;
@@ -91,7 +103,7 @@ const StyledFeatureCard = styled(Card)`
   margin-bottom: 16px;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   &:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -99,20 +111,15 @@ const StyledFeatureCard = styled(Card)`
   }
 
   .ant-card-body {
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    padding: 0;
+    flex-direction: column;
   }
-`;
-
-const CardImageWrapper = styled.div`
-  flex: 0 0 40%;
-  overflow: hidden;
 `;
 
 const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
   object-position: center;
   transition: transform 0.3s ease;
@@ -120,14 +127,6 @@ const CardImage = styled.img`
   ${StyledFeatureCard}:hover & {
     transform: scale(1.05);
   }
-`;
-
-const CardContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  justify-content: center;
 `;
 
 const CardTitle = styled.h3`
@@ -141,12 +140,13 @@ const CardDescription = styled.p`
   font-size: 14px;
   color: #666;
   margin-bottom: 16px;
+  flex: 1;
 `;
 
 const CardButton = styled(Button)`
   align-self: flex-start;
-  background-color: #52c41a;
-  border-color: #52c41a;
+  background-color: ${secondaryColor};
+  border-color: ${secondaryColor};
 
   &:hover {
     background-color: #73d13d;
@@ -161,17 +161,12 @@ const FeatureCard = ({
   buttonText = "Go to",
   onButtonClick,
 }) => (
-  <StyledFeatureCard>
-    <CardImageWrapper>
-      <CardImage src={imageUrl} alt={title} />
-    </CardImageWrapper>
-    <CardContent>
-      <CardTitle>{title}</CardTitle>
-      <CardDescription>{description}</CardDescription>
-      <CardButton type="primary" onClick={onButtonClick}>
-        {buttonText}
-      </CardButton>
-    </CardContent>
+  <StyledFeatureCard cover={<CardImage src={imageUrl} alt={title} />}>
+    <CardTitle>{title}</CardTitle>
+    <CardDescription>{description}</CardDescription>
+    <CardButton type="primary" onClick={onButtonClick}>
+      {buttonText}
+    </CardButton>
   </StyledFeatureCard>
 );
 
@@ -183,7 +178,6 @@ const handleLogout = () => {
 const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState("1");
-  const navigate = useNavigate();
 
   const {
     token: { borderRadiusLG },
@@ -200,26 +194,30 @@ const Layouts = () => {
     {
       title: "Total Plants",
       value: 1254,
-      icon: <BranchesOutlined style={{ fontSize: 24, color: "#52c41a" }} />,
+      icon: (
+        <BranchesOutlined style={{ fontSize: 24, color: secondaryColor }} />
+      ),
       color: "#f6ffed",
     },
     {
       title: "Identified Diseases",
       value: 28,
-      icon: <WarningOutlined style={{ fontSize: 24, color: "#faad14" }} />,
+      icon: <WarningOutlined style={{ fontSize: 24, color: accentColor }} />,
       color: "#fff7e6",
     },
     {
       title: "Active Users",
       value: 4367,
-      icon: <UserOutlined style={{ fontSize: 24, color: "#1890ff" }} />,
+      icon: <UserOutlined style={{ fontSize: 24, color: mainColor }} />,
       color: "#e6f7ff",
     },
     {
       title: "Total Revenue",
       value: 15480,
       prefix: "$",
-      icon: <DollarCircleOutlined style={{ fontSize: 24, color: "#52c41a" }} />,
+      icon: (
+        <DollarCircleOutlined style={{ fontSize: 24, color: secondaryColor }} />
+      ),
       color: "#f6ffed",
     },
   ];
@@ -232,7 +230,7 @@ const Layouts = () => {
       description:
         "Instantly identify plants using our AI-powered image recognition technology.",
       buttonText: "Identify Plants",
-      onButtonClick: () => navigate("/plant-identification"),
+      onButtonClick: () => {},
     },
     {
       imageUrl:
@@ -241,9 +239,45 @@ const Layouts = () => {
       description:
         "Detect and diagnose plant diseases early to protect your garden.",
       buttonText: "Detect Diseases",
-      onButtonClick: () => navigate("/disease-detection"),
+      onButtonClick: () => {},
     },
   ];
+
+  const renderContent = () => {
+    switch (selectedKey) {
+      case "4":
+        return <Customers />;
+      default:
+        return (
+          <>
+            <Title level={2} style={{ marginBottom: 24, color: "#3f3f3f" }}>
+              Dashboard Overview
+            </Title>
+            <Row gutter={[16, 16]}>
+              {cardData.map((card, index) => (
+                <Col xs={24} sm={12} md={6} key={index}>
+                  <StyledCard hoverable style={{ background: card.color }}>
+                    <StyledStatistic
+                      title={card.title}
+                      value={card.value}
+                      prefix={card.prefix}
+                      suffix={card.icon}
+                    />
+                  </StyledCard>
+                </Col>
+              ))}
+            </Row>
+            <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
+              {featureCardData.map((card, index) => (
+                <Col xs={24} md={12} key={index}>
+                  <FeatureCard {...card} />
+                </Col>
+              ))}
+            </Row>
+          </>
+        );
+    }
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -263,15 +297,10 @@ const Layouts = () => {
         }}
       >
         <CenteredMenu
-          theme="light"
+          theme="dark"
           mode="inline"
           selectedKeys={[selectedKey]}
-          onClick={({ key }) => {
-            setSelectedKey(key);
-            navigate(
-              menuItems.find((item) => item.key === key).label.toLowerCase()
-            );
-          }}
+          onClick={({ key }) => setSelectedKey(key)}
           items={menuItems}
         />
       </Sider>
@@ -303,7 +332,7 @@ const Layouts = () => {
                   style: {
                     fontSize: "18px",
                     cursor: "pointer",
-                    color: "#52c41a",
+                    color: "#fff",
                   },
                 }
               )}
@@ -329,30 +358,7 @@ const Layouts = () => {
             overflow: "initial",
           }}
         >
-          <Title level={2} style={{ marginBottom: 24, color: "#3f3f3f" }}>
-            Dashboard Overview
-          </Title>
-          <Row gutter={[16, 16]}>
-            {cardData.map((card, index) => (
-              <Col xs={24} sm={12} md={6} key={index}>
-                <StyledCard hoverable style={{ background: card.color }}>
-                  <StyledStatistic
-                    title={card.title}
-                    value={card.value}
-                    prefix={card.prefix}
-                    suffix={card.icon}
-                  />
-                </StyledCard>
-              </Col>
-            ))}
-          </Row>
-          <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
-            {featureCardData.map((card, index) => (
-              <Col xs={24} md={12} key={index}>
-                <FeatureCard {...card} />
-              </Col>
-            ))}
-          </Row>
+          {renderContent()}
         </Content>
       </Layout>
     </Layout>
