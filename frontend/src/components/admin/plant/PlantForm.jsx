@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
-import { createPlant } from "../../services/plantService.js";
+import { createPlant } from "../../../services/plantService.js";
 
 const sunlightOptions = [
   { value: "Full Sun", label: "Full Sun" },

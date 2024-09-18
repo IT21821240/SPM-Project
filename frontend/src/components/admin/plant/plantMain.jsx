@@ -1,10 +1,8 @@
-import Footer from "../common/section/Footer.jsx";
-import Header from "../common/section/Header.jsx";
-import PlantForm from "../plant/PlantForm.jsx";
-import PlantList from "../plant/PlantList.jsx";
+import PlantForm from "./PlantForm.jsx";
+import PlantList from "./PlantList.jsx";
 import { useState } from "react";
 
-import banner from "../../assets/banner2.jpg";
+import banner from "../../../assets/banner2.jpg";
 
 const Home = () => {
   const [view, setView] = useState("list"); // 'list' or 'form'
@@ -14,7 +12,6 @@ const Home = () => {
   };
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main className="flex-grow">
         <div
           className="bg-cover bg-center bg-no-repeat relative"
@@ -55,7 +52,6 @@ const Home = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

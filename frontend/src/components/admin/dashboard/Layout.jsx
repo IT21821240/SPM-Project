@@ -23,6 +23,8 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import Customers from "../../admin/customers/Customers"; // Import the Customers component
+import Dashboard from "../disease/Dashboard";
+import Home from "../plant/plantMain"; // Import the plantMain component
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -78,7 +80,8 @@ const CenteredMenu = styled(Menu)`
 
   .anticon {
     color: white !important;
-  }
+  }import Home from './../../plant/plantMain';
+
 `;
 
 const StyledLogoutButton = styled(Button)`
@@ -245,6 +248,10 @@ const Layouts = () => {
 
   const renderContent = () => {
     switch (selectedKey) {
+      case "2":
+        return <Home />;
+      case "3":
+        return <Dashboard />;
       case "4":
         return <Customers />;
       default:

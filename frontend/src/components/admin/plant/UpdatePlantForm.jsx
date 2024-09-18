@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPlantById, updatePlant } from "../../services/plantService.js";
+import { getPlantById, updatePlant } from "../../../services/plantService.js";
 
 const UpdatePlantForm = () => {
   const { id } = useParams();
