@@ -6,7 +6,7 @@ const UserHome = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow mt-auto">
         <div
           className="bg-cover bg-center bg-no-repeat relative"
           style={{
