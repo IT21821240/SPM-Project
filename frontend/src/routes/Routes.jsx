@@ -17,6 +17,7 @@ import CreateDisease from "../components/admin/disease/CreateDisease";
 import Dashboard from "../components/admin/disease/Dashboard";
 import UpdateDisease from "../components/admin/disease/UpdateDisease";
 import DiseaseList from "../components/admin/disease/DiseaseList";
+import UserDiseaseList from "../components/client/disease/diseaseList";
 
 const AppRoutes = () => {
   return (
@@ -34,10 +35,11 @@ const AppRoutes = () => {
       <Route path="/update/:id" element={<UpdatePlantForm />} />
 
       {/* disease */}
-      <Route path="view-disease" element={<Dashboard />} />
-      <Route path="create-disease" element={<CreateDisease />} />
-      <Route path="disease-list" element={<DiseaseList />} />
-      <Route path="update-disease/:id" element={<UpdateDisease />} />
+      <Route path="/view-disease" element={<Dashboard />} />
+      <Route path="/create-disease" element={<CreateDisease />} />
+      <Route path="/disease-list" element={<DiseaseList />} />
+      <Route path="/update-disease/:id" element={<UpdateDisease />} />
+      <Route path="/user-disease-list" element={<UserDiseaseList />} />
     </Routes>
   );
 };
