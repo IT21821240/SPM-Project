@@ -5,6 +5,7 @@ import SignProcess from "../components/common/main/SignProcess";
 import UserProfile from "../components/client/profile/UserProfile";
 import UserHome from "../components/client/dashboard/UserHome";
 import Detection from "../components/client/detection/Detection";
+import Feedback from "../components/client/detection/feedback";
 import Layout from "../components/admin/dashboard/Layout";
 import Customers from "../components/admin/customers/Customers";
 
@@ -27,6 +28,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/userhome" element={<UserHome />} />
       <Route path="/detection" element={<Detection />} />
+      <Route path="/feedback" element={<Feedback />} />
       <Route path="/admindashboard" element={<Layout />} />
       <Route path="/admindashboard/customers" element={<Customers />} />
 
