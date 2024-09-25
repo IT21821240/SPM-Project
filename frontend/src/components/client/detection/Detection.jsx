@@ -3,6 +3,7 @@ import { useState } from "react";
 import bg from "../../../assets/detection.jpg";
 import Header from "../../common/section/Header";
 import Footer from "../../common/section/Footer";
+import { detectPlantDisease } from "../../../services/detectService";
 
 const Detection = () => {
   const [selectedFile, setSelectedFile] = useState(null);
