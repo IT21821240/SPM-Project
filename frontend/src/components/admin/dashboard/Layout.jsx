@@ -19,12 +19,14 @@ import {
   BranchesOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  ExperimentOutlined,
   DollarCircleOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
 import Customers from "../../admin/customers/Customers"; // Import the Customers component
 import Dashboard from "../disease/Dashboard";
 import Home from "../plant/plantMain"; // Import the plantMain component
+import Fertilizer from "../fertilizer/displayFertilizer";
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -190,6 +192,7 @@ const Layouts = () => {
     { key: "1", icon: <HomeOutlined />, label: "Dashboard" },
     { key: "2", icon: <BranchesOutlined />, label: "Plants" },
     { key: "3", icon: <WarningOutlined />, label: "Diseases" },
+    { key: "5", icon: <ExperimentOutlined />, label: "Fertilizers" },
     { key: "4", icon: <UserOutlined />, label: "Customers" },
   ];
 
@@ -254,6 +257,8 @@ const Layouts = () => {
         return <Dashboard />;
       case "4":
         return <Customers />;
+        case "5":
+        return <Fertilizer />;
       default:
         return (
           <>

@@ -6,6 +6,7 @@ import UserProfile from "../components/client/profile/UserProfile";
 import UserHome from "../components/client/dashboard/UserHome";
 import Detection from "../components/client/detection/Detection";
 import Feedback from "../components/client/detection/feedback";
+import Fertilizer from "../components/client/detection/fertilizer";
 import Layout from "../components/admin/dashboard/Layout";
 import Customers from "../components/admin/customers/Customers";
 
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path="/userhome" element={<UserHome />} />
       <Route path="/detection" element={<Detection />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/fertilizer" element={<Fertilizer />} />
       <Route path="/admindashboard" element={<Layout />} />
       <Route path="/admindashboard/customers" element={<Customers />} />
 
