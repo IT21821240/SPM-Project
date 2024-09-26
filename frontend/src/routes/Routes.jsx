@@ -11,6 +11,7 @@ import Customers from "../components/admin/customers/Customers";
 // plant
 import PlantMain from "../components/admin/plant/plantMain";
 import UpdatePlantForm from "../components/admin/plant/UpdatePlantForm";
+import PlantClientList from "../components/client/plant-client/plantClientList";
 
 // disease
 import CreateDisease from "../components/admin/disease/CreateDisease";
@@ -31,8 +32,8 @@ const AppRoutes = () => {
       <Route path="/admindashboard/customers" element={<Customers />} />
 
       {/* plant */}
-      <Route path="/plant" element={<PlantMain />} />
-      <Route path="/update/:id" element={<UpdatePlantForm />} />
+      <Route path="/plant" element={<PlantClientList />} />
+      {/* <Route path="/update/:id" element={<UpdatePlantForm />} /> */}
 
       {/* disease */}
       <Route path="/view-disease" element={<Dashboard />} />

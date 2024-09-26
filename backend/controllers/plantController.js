@@ -1,4 +1,5 @@
 const Plant = require("../models/Plant");
+const cloudinary = require("../config/cloudinary");
 
 // Controller function to create a new plant
 const createPlant = async (req, res) => {
@@ -14,8 +15,37 @@ const createPlant = async (req, res) => {
       bloomTime,
       height,
       price,
-      imageUrl,
+      imageData,
     } = req.body;
+
+    let imageUrl = "tesr";
+
+    if (imageData) {
+      //Check if the imageData is a valid base64 image
+      if (!imageData.startsWith("data:image")) {
+        return res.status(400).json({ error: "Invalid image format" });
+      }
+
+      // Extract the file type from the base64 string
+      const fileType = imageData.split(";")[0].split("/")[1];
+
+      // List of allowed image types
+      const allowedTypes = ["jpeg", "jpg", "png"];
+
+      if (!allowedTypes.includes(fileType)) {
+        return res.status(400).json({ error: "Invalid image type" });
+      }
+
+      // Upload image to Cloudinary
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(imageData, {
+          folder: "Plants",
+        });
+        imageUrl = uploadResponse.secure_url;
+      } catch (uploadError) {
+        return res.status(500).json({ error: "Failed to upload an image" });
+      }
+    }
 
     // Create a new Plant instance
     const newPlant = new Plant({

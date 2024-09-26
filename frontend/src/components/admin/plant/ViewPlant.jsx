@@ -2,97 +2,28 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPlantById, updatePlant } from "../../../services/plantService.js";
 
-const UpdatePlantForm = ({ id, viewChange }) => {
-  const sunlightOptions = [
-    { value: "Full Sun", label: "Full Sun" },
-    { value: "Partial Shade", label: "Partial Shade" },
-    { value: "Full Shade", label: "Full Shade" },
-  ];
-
-  const waterFrequencyOptions = [
-    { value: "Daily", label: "Daily" },
-    { value: "Weekly", label: "Weekly" },
-    { value: "Biweekly", label: "Biweekly" },
-    { value: "Monthly", label: "Monthly" },
-  ];
-
+const ViewPlant = ({ id, viewChange }) => {
   // const { id } = useParams();
   const navigate = useNavigate();
   const [plant, setPlantData] = useState(null);
-  const [name, setName] = useState("");
-  const [scientificName, setScientificName] = useState("");
-  const [family, setFamily] = useState("");
-  const [origin, setOrigin] = useState("");
-  const [description, setDescription] = useState("");
-  const [sunlight, setSunlight] = useState("");
-  const [waterFrequency, setWaterFrequency] = useState("");
-  const [soilType, setSoilType] = useState("");
-  const [minTemperature, setMinTemperature] = useState("");
-  const [maxTemperature, setMaxTemperature] = useState("");
-  const [bloomTime, setBloomTime] = useState("");
-  const [height, setHeight] = useState("");
-  const [imageUrl, setImageUrl] = useState(
-    " https://www.kew.org/sites/default/files/styles/original/public/2020-04/Aloe_Vera.jpg.webp?itok=nuAtuuf1"
-  );
 
   useEffect(() => {
     const fetchPlant = async () => {
       const plantData = await getPlantById(id);
       setPlantData(plantData);
-      setName(plantData.name);
-      setScientificName(plantData.scientificName);
-      setFamily(plantData.family);
-      setOrigin(plantData.origin);
-      setDescription(plantData.description);
-      setSunlight(plantData.careInstructions.sunlight);
-      setWaterFrequency(plantData.careInstructions.waterFrequency);
-      setSoilType(plantData.careInstructions.soilType);
-      setMinTemperature(plantData.careInstructions.temperatureRange.min);
-      setMaxTemperature(plantData.careInstructions.temperatureRange.max);
-      setBloomTime(plantData.bloomTime);
-      setHeight(plantData.height);
-      setImageUrl(plantData.imageUrl);
     };
 
     fetchPlant();
   }, [id]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const updatedPlant = {
-        name,
-        scientificName,
-        family,
-        origin,
-        description,
-        careInstructions: {
-          sunlight,
-          waterFrequency,
-          soilType,
-          temperatureRange: {
-            min: minTemperature,
-            max: maxTemperature,
-          },
-        },
-        bloomTime,
-        height,
-        imageUrl,
-      };
-      await updatePlant(id, updatedPlant);
-      viewChange();
-    } catch (error) {
-      console.error("Failed to update the plant:", error);
-    }
-  };
   if (!plant) return <p>Loading...</p>;
 
   return (
     <form
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-xl"
-      onSubmit={handleSubmit}
+      onSubmit={() => {}}
     >
-      <h2 className="text-2xl font-bold mb-4">Update Plant</h2>
+      <h2 className="text-2xl font-bold mb-4"></h2>
 
       <div className="flex">
         <div className="w-1/2 pr-4">
@@ -100,43 +31,19 @@ const UpdatePlantForm = ({ id, viewChange }) => {
 
           <div className="mb-4">
             {/* new code */}
-            <label
+            {/* <label
               className="block text-gray-700 text-lg font-bold mb-2"
               htmlFor="imageUpload"
             >
               Plant Image
-            </label>
-            {/* <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden mb-2">
-                <img
-                  src={previewImage || defaultImageUrl}
-                  alt="Plant preview"
-                  className="w-full h-full object-cover" />
-              </div>
-              <input
-                type="file"
-                id="imageUpload"
-                accept="image/*"
-                onChange={handleImageUpload}
-                ref={fileInputRef}
-                className="hidden" />
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current.click()}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  {previewImage ? "Change Image" : "Upload Image"}
-                </button>
-                {previewImage && (
-                  <button
-                    type="button"
-                    onClick={handleRemoveImage}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Remove Image
-                  </button>
-                )}
-              </div> */}
+            </label> */}
+            <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden mb-2">
+              <img
+                src={plant.imageUrl}
+                alt="Plant preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
           <div className="mb-4">
@@ -151,9 +58,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="name"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
+              value={plant.name}
+              disabled
             />
           </div>
 
@@ -169,9 +75,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="scientificName"
               id="scientificName"
-              value={scientificName}
-              onChange={(e) => setScientificName(e.target.value)}
-              required
+              value={plant.scientificName}
+              disabled
             />
           </div>
 
@@ -187,9 +92,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="family"
               id="family"
-              value={family}
-              onChange={(e) => setFamily(e.target.value)}
-              required
+              value={plant.family}
+              disabled
             />
           </div>
 
@@ -205,9 +109,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="origin"
               id="origin"
-              value={origin}
-              onChange={(e) => setOrigin(e.target.value)}
-              required
+              value={plant.origin}
+              disabled
             />
           </div>
 
@@ -222,9 +125,9 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
               name="description"
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={plant.description}
               rows="4"
+              disabled
             />
           </div>
 
@@ -244,19 +147,14 @@ const UpdatePlantForm = ({ id, viewChange }) => {
             >
               Sunlight Requirements
             </label>
-            <select
+            <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+              type="text"
               name="careInstructions.sunlight"
               id="careInstructions.sunlight"
-              value={sunlight}
-              onChange={(e) => setSunlight(e.target.value)}
-            >
-              {sunlightOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              value={plant.careInstructions.sunlight}
+              disabled
+            />
           </div>
 
           <div className="mb-4">
@@ -266,19 +164,14 @@ const UpdatePlantForm = ({ id, viewChange }) => {
             >
               Water Frequency
             </label>
-            <select
+            <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+              type="text"
               name="careInstructions.waterFrequency"
               id="careInstructions.waterFrequency"
-              value={waterFrequency}
-              onChange={(e) => setWaterFrequency(e.target.value)}
-            >
-              {waterFrequencyOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              value={plant.careInstructions.waterFrequency}
+              disabled
+            />
           </div>
 
           <div className="mb-4">
@@ -293,8 +186,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="careInstructions.soilType"
               id="careInstructions.soilType"
-              value={soilType}
-              onChange={(e) => setSoilType(e.target.value)}
+              value={plant.careInstructions.soilType}
+              disabled
             />
           </div>
 
@@ -310,8 +203,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="number"
               name="minTemperature"
               id="minTemperature"
-              value={minTemperature}
-              onChange={(e) => setMinTemperature(e.target.value)}
+              value={plant.careInstructions.temperatureRange.min}
+              disabled
             />
           </div>
 
@@ -327,8 +220,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="number"
               name="maxTemperature"
               id="maxTemperature"
-              value={maxTemperature}
-              onChange={(e) => setMaxTemperature(e.target.value)}
+              value={plant.careInstructions.temperatureRange.max}
+              disabled
             />
           </div>
 
@@ -344,8 +237,8 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="text"
               name="bloomTime"
               id="bloomTime"
-              value={bloomTime}
-              onChange={(e) => setBloomTime(e.target.value)}
+              value={plant.bloomTime}
+              disabled
             />
           </div>
 
@@ -361,26 +254,14 @@ const UpdatePlantForm = ({ id, viewChange }) => {
               type="number"
               name="height"
               id="height"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
+              value={plant.height}
+              disabled
             />
           </div>
-
-          <div className="mt-10 ml-auto">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              type="submit"
-            >
-              Upate Plant
-            </button>
-          </div>
-
-          {/* Add more fields here for the right column */}
-          {/* ... */}
         </div>
       </div>
     </form>
   );
 };
 
-export default UpdatePlantForm;
+export default ViewPlant;
