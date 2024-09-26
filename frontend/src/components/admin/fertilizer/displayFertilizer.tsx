@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CreateFertilizer from './createFertilizer'; 
-import UpdateFertilizer from './updateFertilizer'; 
+import CreateFertilizer from './createFertilizer';
+import UpdateFertilizer from './updateFertilizer';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 interface Fertilizer {
   _id: string;
@@ -61,6 +63,37 @@ const FertilizerDisplay: React.FC = () => {
     fetchFertilizers();
   };
 
+  const generatePDFReport = () => {
+    const doc = new jsPDF();
+
+    // Add title
+    doc.setFontSize(18);
+    doc.text('Fertilizer Report', 14, 22);
+
+    // Define headers
+    const headers = [['Name', 'Type', 'Description', 'Nitrogen (%)', 'Phosphorus (%)', 'Potassium (%)']];
+
+    // Map the data to rows
+    const rows = fertilizers.map(fertilizer => [
+      fertilizer.name,
+      fertilizer.type,
+      fertilizer.description,
+      fertilizer.nutrientContent.nitrogen,
+      fertilizer.nutrientContent.phosphorus,
+      fertilizer.nutrientContent.potassium,
+    ]);
+
+    // Generate table in the PDF
+    (doc as any).autoTable({
+      startY: 30,
+      head: headers,
+      body: rows,
+    });
+
+    // Save the PDF with a file name
+    doc.save('fertilizer_report.pdf');
+  };
+
   return (
     <div className="container mx-auto p-6">
       {isAdding ? (
@@ -75,6 +108,13 @@ const FertilizerDisplay: React.FC = () => {
           >
             Add New Fertilizer
           </button>
+          <button
+            onClick={generatePDFReport}
+            className="ml-4 mb-6 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700"
+          >
+            Generate PDF Report
+          </button>
+
           <h2 className="text-3xl font-bold text-center mb-6 text-green-600">Available Fertilizers</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {fertilizers.length > 0 ? (

@@ -57,7 +57,9 @@ const UserDiseaseList = () => {
   return (
     <>
       <Header />
+      <br></br>
       <div className="p-6 max-w-5xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200">
+        <br></br>
         <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">
           Disease List
         </h2>
@@ -78,35 +80,35 @@ const UserDiseaseList = () => {
                 )}
                 {disease.affectedSpecies && (
                   <p className="text-gray-700 mt-2">
-                    <strong>Affected Species:</strong>{" "}
-                    {disease.affectedSpecies.join(", ")}
-                  </p>
-                )}
-                {disease.treatment && (
-                  <p className="text-gray-700 mt-2">
-                    <strong>Treatment:</strong> {disease.treatment}
-                  </p>
-                )}
-                <p
-                  className={`mt-2 text-sm font-semibold ${
-                    disease.severity === "Severe"
-                      ? "text-red-600"
-                      : disease.severity === "Moderate"
-                      ? "text-yellow-600"
-                      : "text-green-600"
-                  }`}
-                >
-                  <strong>Severity:</strong> {disease.severity}
-                </p>
-              </div>
-            ))}
+                                    <strong>Affected Species:</strong>{" "}
+                {disease.affectedSpecies.join(", ")}
+              </p>
+            )}
+            {disease.treatment && (
+              <p className="text-gray-700 mt-2">
+                <strong>Treatment:</strong> {disease.treatment}
+              </p>
+            )}
+            <p
+              className={`mt-2 text-sm font-semibold ${
+                disease.severity === "Severe"
+                  ? "text-red-600"
+                  : disease.severity === "Moderate"
+                  ? "text-yellow-600"
+                  : "text-green-600"
+              }`}
+            >
+              <strong>Severity:</strong> {disease.severity}
+            </p>
           </div>
-        ) : (
-          <p className="text-gray-600 text-center">No diseases available.</p>
-        )}
+        ))}
       </div>
-      <Footer />
-    </>
+    ) : (
+      <p className="text-gray-600 text-center">No diseases available.</p>
+    )}
+  </div>
+  <Footer />
+</>
   );
 };
 
