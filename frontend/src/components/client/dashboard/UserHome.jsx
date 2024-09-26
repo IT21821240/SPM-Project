@@ -34,7 +34,12 @@ const UserHome = () => {
                 recommendations to help you maintain healthy plants and boost
                 your yields.
               </p>
-              <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+              <button
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={() =>
+                  (window.location.href = "http://localhost:8000/detection")
+                }
+              >
                 Get Started
               </button>
             </div>

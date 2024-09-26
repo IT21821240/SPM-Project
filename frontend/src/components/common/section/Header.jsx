@@ -14,7 +14,6 @@ const Header = () => {
     { name: "Plant", link: "/plant" },
     { name: "Disease", link: "/user-disease-list" },
     { name: "Detection", link: "/detection" },
-    { name: "Feedback", link: "/feedback" },
   ];
 
   useEffect(() => {
