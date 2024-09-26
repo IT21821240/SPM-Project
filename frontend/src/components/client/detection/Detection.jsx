@@ -3,27 +3,50 @@ import { useState } from "react";
 import bg from "../../../assets/bg.jpeg";
 import Header from "../../common/section/Header";
 import Footer from "../../common/section/Footer";
+import { detectPlantDisease } from "../../../services/detectService";
 
 const Detection = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const [fileName, setFileName] = useState(null);
+  
+  
+    const [predictedImg, setPredictedImg] = useState('');
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+    
+      if (file) {
+        setSelectedFile(file);
+        setFileName(file.name); 
+    
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
+  const handleSubmit = async(event) => {
+    try{
+      setLoading(true);
+      event.preventDefault();
+      const plantData={
+        image_path:fileName
       };
-      reader.readAsDataURL(file);
-    }
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // form submission logic here
+
+      const response=await detectPlantDisease(plantData);
+      if(response){
+      setPredictedImg(response.predicted_class);
+      }
+      setLoading(false);
+    }catch(err){
+      setLoading(false);
+    }   
   };
 
   return (
@@ -68,10 +91,11 @@ const Detection = () => {
               type="submit"
               className="bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 text-white py-4 px-8 rounded-lg hover:bg-gradient-to-r hover:from-teal-500 hover:via-blue-600 hover:to-purple-700 transition duration-300 w-full"
             >
-              Upload & Detect
+              {loading ? 'loading' : 'Upload & Detect'}
             </button>
           </form>
         </div>
+        <h1>{predictedImg ? `Predicted Image Type-${predictedImg}` : ''}</h1>
       </div>
       <Footer />
     </>

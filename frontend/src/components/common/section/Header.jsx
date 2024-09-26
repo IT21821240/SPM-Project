@@ -12,7 +12,7 @@ const Header = () => {
   const Navbar = [
     { name: "Home", link: "/userhome" },
     { name: "Plant", link: "/plant" },
-    { name: "Disease", link: "/disease" },
+    { name: "Disease", link: "/user-disease-list" },
     { name: "Detection", link: "/detection" },
     { name: "Feedback", link: "/feedback" },
   ];

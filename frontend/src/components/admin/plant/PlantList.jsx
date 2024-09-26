@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllPlants, deletePlant } from "../../services/plantService.js";
-import PlantItem from "./PlantItem";
+import { getAllPlants, deletePlant } from "../../../services/plantService.js";
+import PlantItem from "./PlantItem.jsx";
 
 const PlantList = () => {
   const [plants, setPlants] = useState([]);

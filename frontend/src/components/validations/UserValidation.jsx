@@ -39,9 +39,11 @@ export const validationRules = {
   },
   phone: {
     required: true,
-    pattern: /^\d{10}$/,
-    message: "Phone number must be exactly 10 digits",
+    pattern: /^07\d{8}$/,
+    message: "Phone number must start with '07' and be exactly 10 digits long",
+    maxLength: 10,
   },
+
   email: {
     required: true,
     pattern: /^[^\s@]+@gmail\.com$/,
