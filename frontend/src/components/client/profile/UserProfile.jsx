@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -230,7 +231,7 @@ const UserProfile = () => {
                   className="bg-white text-info hover:bg-purple-100 font-bold py-2 px-4 rounded-full flex items-center transition duration-300"
                 >
                   <FaFilePdf className="mr-2" />
-                  Download Details PDF
+                  Download PDF
                 </button>
               </div>
               <div className="p-6">

@@ -173,127 +173,132 @@ const Customers = () => {
     );
 
   return (
-    <Card
-      style={{
-        margin: "1rem",
-        padding: "2rem",
-        backgroundColor: "#f9f9f9",
-        boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-      }}
-    >
-      <CardHeader
-        title="User Management Dashboard"
-        action={
-          <IconButton
-            color="primary"
-            onClick={fetchUsers}
-            title="Refresh Users"
-          >
-            <Refresh />
-          </IconButton>
-        }
-        subheader={`Manage your platform's users`}
-        style={{ textAlign: "center", color: "#3f51b5" }}
-      />
-      <CardContent>
-        <Grid
-          container
-          spacing={3}
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={handleSearch}
-              InputProps={{
-                startAdornment: (
-                  <Search style={{ color: "gray", marginRight: "0.5rem" }} />
-                ),
-              }}
-              variant="outlined"
-              style={{ backgroundColor: "#fff" }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
-            <Badge
-              badgeContent={filteredUsers.length}
-              color="secondary"
-              showZero
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              style={{ marginRight: "1rem" }}
-            >
-              <Group color="action" fontSize="large" />
-            </Badge>
-            <Button
-              variant="contained"
+    <>
+      <Card
+        style={{
+          margin: "1rem",
+          padding: "2rem",
+          backgroundColor: "#f9f9f9",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+        }}
+      >
+        <CardHeader
+          title="User Management Dashboard"
+          action={
+            <IconButton
               color="primary"
-              onClick={generatePDF}
-              startIcon={<GetApp />}
+              onClick={fetchUsers}
+              title="Refresh Users"
             >
-              Download PDF
-            </Button>
+              <Refresh />
+            </IconButton>
+          }
+          style={{ textAlign: "center", color: "#3f51b5" }}
+        />
+        <CardContent>
+          <Grid
+            container
+            spacing={3}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={handleSearch}
+                InputProps={{
+                  startAdornment: (
+                    <Search style={{ color: "gray", marginRight: "0.5rem" }} />
+                  ),
+                }}
+                variant="outlined"
+                style={{ backgroundColor: "#fff" }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
+              <Badge
+                badgeContent={filteredUsers.length}
+                color="secondary"
+                showZero
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                style={{ marginRight: "1rem" }}
+              >
+                <Group color="action" fontSize="large" />
+              </Badge>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={generatePDF}
+                startIcon={<GetApp />}
+              >
+                Download PDF
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <Typography
-          variant="h6"
-          style={{
-            marginTop: "1rem",
-            marginBottom: "1rem",
-            textAlign: "center",
-            color: "#333",
-          }}
-        >
-          Total Users: {users.length}
-        </Typography>
-        <TableContainer
-          component={Paper}
-          style={{
-            boxShadow: "0px 3px 6px rgba(0,0,0,0.1)",
-            borderRadius: "8px",
-            overflow: "hidden",
-          }}
-        >
-          <Table>
-            <TableHead style={{ backgroundColor: "#3f51b5", color: "#fff" }}>
-              <TableRow>
-                <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
-                  Name
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
-                  Email
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
-                  Mobile Number
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredUsers.length > 0 ? (
-                filteredUsers.map((user) => (
-                  <TableRow key={user._id} hover style={{ cursor: "pointer" }}>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.phone || "N/A"}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
+          <Typography
+            variant="h6"
+            style={{
+              marginTop: "1rem",
+              marginBottom: "1rem",
+              textAlign: "center",
+              color: "#333",
+            }}
+          >
+            Total Users: {users.length}
+          </Typography>
+          <TableContainer
+            component={Paper}
+            style={{
+              boxShadow: "0px 3px 6px rgba(0,0,0,0.1)",
+              borderRadius: "8px",
+              overflow: "hidden",
+            }}
+          >
+            <Table>
+              <TableHead style={{ backgroundColor: "#3f51b5", color: "#fff" }}>
                 <TableRow>
-                  <TableCell colSpan={4} align="center">
-                    No users found.
+                  <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
+                    Name
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
+                    Email
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold", color: "#fff" }}>
+                    Mobile Number
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-    </Card>
+              </TableHead>
+              <TableBody>
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user) => (
+                    <TableRow
+                      key={user._id}
+                      hover
+                      style={{ cursor: "pointer" }}
+                    >
+                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.phone || "N/A"}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      No users found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 

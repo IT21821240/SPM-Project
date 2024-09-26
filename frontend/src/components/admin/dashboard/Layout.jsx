@@ -19,7 +19,6 @@ import {
   BranchesOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  DollarCircleOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
 import Customers from "../../admin/customers/Customers"; // Import the Customers component
@@ -146,30 +145,10 @@ const CardDescription = styled.p`
   flex: 1;
 `;
 
-const CardButton = styled(Button)`
-  align-self: flex-start;
-  background-color: ${secondaryColor};
-  border-color: ${secondaryColor};
-
-  &:hover {
-    background-color: #73d13d;
-    border-color: #73d13d;
-  }
-`;
-
-const FeatureCard = ({
-  imageUrl,
-  title,
-  description,
-  buttonText = "Go to",
-  onButtonClick,
-}) => (
+const FeatureCard = ({ imageUrl, title, description }) => (
   <StyledFeatureCard cover={<CardImage src={imageUrl} alt={title} />}>
     <CardTitle>{title}</CardTitle>
     <CardDescription>{description}</CardDescription>
-    <CardButton type="primary" onClick={onButtonClick}>
-      {buttonText}
-    </CardButton>
   </StyledFeatureCard>
 );
 
@@ -196,7 +175,7 @@ const Layouts = () => {
   const cardData = [
     {
       title: "Total Plants",
-      value: 1254,
+      value: 10,
       icon: (
         <BranchesOutlined style={{ fontSize: 24, color: secondaryColor }} />
       ),
@@ -204,24 +183,15 @@ const Layouts = () => {
     },
     {
       title: "Identified Diseases",
-      value: 28,
+      value: 5,
       icon: <WarningOutlined style={{ fontSize: 24, color: accentColor }} />,
       color: "#fff7e6",
     },
     {
       title: "Active Users",
-      value: 4367,
+      value: 9,
       icon: <UserOutlined style={{ fontSize: 24, color: mainColor }} />,
       color: "#e6f7ff",
-    },
-    {
-      title: "Total Revenue",
-      value: 15480,
-      prefix: "$",
-      icon: (
-        <DollarCircleOutlined style={{ fontSize: 24, color: secondaryColor }} />
-      ),
-      color: "#f6ffed",
     },
   ];
 
@@ -230,19 +200,17 @@ const Layouts = () => {
       imageUrl:
         "https://watchandlearn.scholastic.com/content/dam/classroom-magazines/watchandlearn/videos/animals-and-plants/plants/what-are-plants-/What-Are-Plants.jpg",
       title: "Plant Identification",
-      description:
-        "Instantly identify plants using our AI-powered image recognition technology.",
-      buttonText: "Identify Plants",
-      onButtonClick: () => {},
+      description: `Instantly identify plants using our AI-powered image recognition technology.Whether you're a seasoned botanist or a curious nature lover, our Plant Identification tool 
+      will help you connect with the green world around you like never before. Start your plant 
+      identification journey today and see your environment through new eyes!`,
     },
     {
       imageUrl:
         "https://hips.hearstapps.com/hmg-prod/images/colorado-beetle-eats-a-potato-leaves-young-royalty-free-image-542328690-1531259828.jpg",
       title: "Disease Detection",
-      description:
-        "Detect and diagnose plant diseases early to protect your garden.",
-      buttonText: "Detect Diseases",
-      onButtonClick: () => {},
+      description: `Detect and diagnose plant diseases early to protect your garden. Don't let diseases or pests ruin your hard work in the garden. With our Disease Detection 
+      tool, you'll have a plant doctor in your pocket, ready to help you maintain a vibrant and 
+      healthy garden all year round. Protect your green friends today!`,
     },
   ];
 
