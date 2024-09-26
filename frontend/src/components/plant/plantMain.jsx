@@ -2,12 +2,33 @@ import Footer from "../common/section/Footer.jsx";
 import Header from "../common/section/Header.jsx";
 import PlantForm from "../plant/PlantForm.jsx";
 import PlantList from "../plant/PlantList.jsx";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import banner from "../../assets/banner2.jpg";
 
 const Home = () => {
   const [view, setView] = useState("list"); // 'list' or 'form'
+  const mainRef = useRef(null);
+  const footerRef = useRef(null);
+  const [mainHeight, setMainHeight] = useState(0);
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeights = () => {
+      if (mainRef.current) {
+        setMainHeight(mainRef.current.offsetHeight);
+        
+      }
+      if (footerRef.current) {
+        setFooterHeight(footerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeights();
+    window.addEventListener('resize', updateHeights);
+
+    return () => window.removeEventListener('resize', updateHeights);
+  }, []);
 
   const handleViewChange = (newView) => {
     setView(newView);
@@ -15,7 +36,7 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow">
+      <main ref={mainRef} className="flex-grow relative">
         <div
           className="bg-cover bg-center bg-no-repeat relative"
           style={{
@@ -55,7 +76,21 @@ const Home = () => {
           </div>
         </div>
       </main>
+      <div ref={footerRef}>
       <Footer />
+      </div>
+      <button
+        className="fixed right-4 bg-green-600 text-white text-xl px-4 py-2 rounded-full shadow-lg hover:bg-green-700 transition-colors duration-300"
+        style={{
+          bottom: `max(${footerHeight}px + 1rem, calc(100vh - ${mainHeight}px - 1rem))`,
+          
+        }}
+        // onClick={() => {}}
+        
+      >
+        +
+      </button>
+      
     </div>
   );
 };
