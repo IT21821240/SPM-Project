@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -22,6 +23,7 @@ import {
   Badge,
 } from "@mui/material";
 import { Search, GetApp, Refresh, Group } from "@mui/icons-material";
+import ImageOne from "../../../assets/loginPage_Image.jpg";
 
 const Customers = () => {
   const [users, setUsers] = useState([]);
@@ -65,90 +67,118 @@ const Customers = () => {
     setFilteredUsers(filtered);
   };
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
+    // Create a new jsPDF instance
     const doc = new jsPDF();
 
-    // Set document properties
+    // Set document properties for professionalism
     doc.setProperties({
-      title: "Green Care User List",
-      subject: "Detailed User Information",
+      title: "Green Care Customer List",
+      subject: "Detailed Customer Information",
       author: "Green Care",
-      keywords: "users, list, green care",
+      keywords: "customers, list, green care",
       creator: "Green Care PDF Generator",
     });
 
-    // Letterhead
-    doc.setDrawColor(0, 100, 0);
-    doc.setFillColor(240, 255, 240);
-    doc.rect(0, 0, doc.internal.pageSize.width, 40, "F");
-    doc.setFontSize(24);
-    doc.setTextColor(0, 100, 0);
-    doc.text("Green Care", 14, 25);
+    // Color scheme for polished design
+    const primaryColor = [39, 174, 96]; // Green for main elements
+    const secondaryColor = [241, 196, 15]; // Yellow for accents
+    const textColor = [44, 62, 80]; // Dark for readable text
+    const lightGray = [241, 241, 241]; // Gray for alternating rows
 
+    // Page dimensions for consistent layout
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 14;
+
+    // Header with company name and slogan
+    const drawHeader = () => {
+      doc.setFillColor(...primaryColor);
+      doc.rect(0, 0, pageWidth, 40, "F");
+
+      doc.setFont("Poppins", "bold");
+      doc.setFontSize(24);
+      doc.setTextColor(255, 255, 255);
+      doc.text("Green Care", margin, 25); // Left-aligned
+
+      doc.setFont("Poppins", "normal");
+      doc.setFontSize(10);
+      doc.text("Sustainable Solutions for a Better Tomorrow", margin, 35); // Left-aligned
+    };
+
+    // Footer with date on the left and page number on the right
+    const drawFooter = (pageNumber, pageCount) => {
+      doc.setFillColor(...lightGray);
+      doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
+
+      doc.setFont("Poppins", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(...textColor);
+
+      // Date on the left
+      doc.text(
+        `Generated: ${new Date().toLocaleString()}`,
+        margin,
+        pageHeight - 10
+      );
+
+      // Page number on the right
+      doc.text(
+        `Page ${pageNumber} of ${pageCount}`,
+        pageWidth - margin,
+        pageHeight - 10,
+        { align: "right" }
+      );
+    };
+
+    // Title and Total Customers, left-aligned
+    drawHeader();
+
+    doc.setFont("Poppins", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(...textColor);
+    doc.text("Customer List", margin, 60); // Left-aligned
+
+    doc.setFont("Poppins", "normal");
     doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0);
-    doc.text("123 Eco Street, Green City, 12345", 14, 35);
+    doc.setTextColor(...primaryColor);
+    doc.text(`Total Customers: ${filteredUsers.length}`, margin, 70); // Left-aligned
 
-    // Title and Total Users
-    doc.setFontSize(18);
-    doc.setTextColor(0, 100, 0);
-    doc.text("Customer List", 14, 60);
+    // Decorative line for separation
+    doc.setDrawColor(...secondaryColor);
+    doc.setLineWidth(0.5);
+    doc.line(margin, 75, pageWidth - margin, 75);
 
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total no of Customers: ${filteredUsers.length}`, 14, 70);
-
-    // Table
+    // Customer data table
     doc.autoTable({
       head: [["Name", "Email", "Mobile Number"]],
       body: filteredUsers.map((user) => [user.name, user.email, user.phone]),
-      startY: 80,
+      startY: 85,
       styles: {
+        font: "Poppins",
         fontSize: 10,
-        cellPadding: 5,
-        lineColor: [0, 100, 0],
-        lineWidth: 0.5,
+        cellPadding: 6,
+        lineColor: [189, 195, 199],
+        lineWidth: 0.1,
       },
       headStyles: {
-        fillColor: [0, 100, 0],
+        fillColor: primaryColor,
         textColor: 255,
         fontSize: 12,
         fontStyle: "bold",
       },
       alternateRowStyles: {
-        fillColor: [240, 255, 240],
+        fillColor: lightGray, // Alternating row colors for clarity
       },
+      margin: { top: 80, right: margin, bottom: 40, left: margin },
       didDrawPage: (data) => {
-        // Letterhead on each page
-        doc.setDrawColor(0, 100, 0);
-        doc.setFillColor(240, 255, 240);
-        doc.rect(0, 0, doc.internal.pageSize.width, 40, "F");
-        doc.setFontSize(24);
-        doc.setTextColor(0, 100, 0);
-        doc.text("Green Care", 14, 25);
-
-        // Add page number at the bottom
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `Page ${data.pageNumber} of ${data.pageCount}`,
-          doc.internal.pageSize.width - 20,
-          doc.internal.pageSize.height - 10
-        );
+        drawHeader();
+        drawFooter(data.pageNumber, data.pageCount);
       },
     });
 
-    // Add generation timestamp
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text(
-      `Generated on: ${new Date().toLocaleString()}`,
-      14,
-      doc.internal.pageSize.height - 10
-    );
-
-    // Save the PDF
-    doc.save("Green_Care_User_List.pdf");
+    // Save the PDF with a clear name
+    doc.save("Green_Care_Customer_List.pdf");
   };
 
   if (loading)
