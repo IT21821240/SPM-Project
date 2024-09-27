@@ -6,11 +6,22 @@ import { TextField } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import Footer from "../../common/section/Footer";
 import banner from "../../../assets/banner2.jpg";
+import PlantDetailsPopup from "./PlantDetailsPopup";
 
 const PlantClientList = () => {
   const [plants, setPlants] = useState([]);
   const [filteredPlants, setFilteredPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [selectedPlant, setSelectedPlant] = useState(null);
+
+  const handleViewPlant = (plant) => {
+    setSelectedPlant(plant);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedPlant(null);
+  };
 
   useEffect(() => {
     fetchPlants();
@@ -74,7 +85,7 @@ const PlantClientList = () => {
                     plant={plant}
                     onDelete={() => {}}
                     onUpdate={() => {}}
-                    onView={() => {}}
+                    onView={() => handleViewPlant(plant)}
                     client={true}
                   />
                 ))}
@@ -84,6 +95,9 @@ const PlantClientList = () => {
         </main>
       </div>
       <Footer />
+      {selectedPlant && (
+        <PlantDetailsPopup plant={selectedPlant} onClose={handleClosePopup} />
+      )}
     </>
   );
 };

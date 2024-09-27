@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef } from "react";
 import { createPlant } from "../../../services/plantService.js";
-
+import { toast } from "react-toastify";
 import defaultImageUrl from "../../../assets/addPlantImage.png";
 
 const sunlightOptions = [
@@ -104,8 +104,14 @@ const PlantForm = ({ onPlantAdded }) => {
       ...plantData,
       imageData, // Include the base64 image data
     };
-    await createPlant(plantDataToSubmit);
-    if (onPlantAdded) onPlantAdded(); // Refresh the plant list and switch view
+
+    try {
+      await createPlant(plantDataToSubmit);
+      toast.success("Plant added successfully!");
+      if (onPlantAdded) onPlantAdded(); // Refresh the plant list and switch view
+    } catch (error) {
+      toast.error("Failed to add the plant. Please try again.");
+    }
   };
 
   return (

@@ -3,6 +3,7 @@ import { getAllPlants, deletePlant } from "../../../services/plantService.js";
 import PlantItem from "./PlantItem.jsx";
 import { TextField, Button } from "@mui/material";
 import { Search, GetApp } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -26,9 +27,12 @@ const PlantList = ({ onUpdate, onView }) => {
     try {
       await deletePlant(id);
       // Refresh the plant list after deletion
+
       setPlants((prevPlants) => prevPlants.filter((plant) => plant._id !== id));
+      toast.success("Plant deleted successfully!");
     } catch (error) {
       console.error("Failed to delete the plant:", error);
+      toast.error("Failed to delete the plant. Please try again.");
     }
   };
 
