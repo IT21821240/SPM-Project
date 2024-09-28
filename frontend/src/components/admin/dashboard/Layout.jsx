@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Layout,
   Menu,
@@ -20,17 +22,17 @@ import {
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import Customers from "../../admin/customers/Customers"; // Import the Customers component
+import Customers from "../../admin/customers/Customers";
 import Dashboard from "../disease/Dashboard";
-import Home from "../plant/plantMain"; // Import the plantMain component
+import Home from "../plant/plantMain";
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
-const mainColor = "#001529"; // Bright blue
-const secondaryColor = "#52c41a"; // Green
-const accentColor = "#faad14"; // Yellow
-const dangerColor = "#f5222d"; // Red
+const mainColor = "#001529";
+const secondaryColor = "#52c41a";
+const accentColor = "#faad14";
+const dangerColor = "#f5222d";
 
 const StyledCard = styled(Card)`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -78,8 +80,7 @@ const CenteredMenu = styled(Menu)`
 
   .anticon {
     color: white !important;
-  }import Home from './../../plant/plantMain';
-
+  }
 `;
 
 const StyledLogoutButton = styled(Button)`
@@ -158,11 +159,39 @@ const handleLogout = () => {
 
 const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [users, setUsers] = useState([]);
   const [selectedKey, setSelectedKey] = useState("1");
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/users/users",
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      setUsers(response.data.users);
+      console.log(response.data.users.length); // Call the callback with the total users
+    } catch (err) {
+      setError(
+        err.response?.data?.error || "An error occurred while fetching users."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const menuItems = [
     { key: "1", icon: <HomeOutlined />, label: "Dashboard" },
@@ -188,7 +217,7 @@ const Layouts = () => {
     },
     {
       title: "Active Users",
-      value: 9,
+      value: users.length,
       icon: <UserOutlined style={{ fontSize: 24, color: mainColor }} />,
       color: "#e6f7ff",
     },
@@ -199,7 +228,7 @@ const Layouts = () => {
       imageUrl:
         "https://watchandlearn.scholastic.com/content/dam/classroom-magazines/watchandlearn/videos/animals-and-plants/plants/what-are-plants-/What-Are-Plants.jpg",
       title: "Plant Identification",
-      description: `Instantly identify plants using our AI-powered image recognition technology.Whether you're a seasoned botanist or a curious nature lover, our Plant Identification tool 
+      description: `Instantly identify plants using our AI-powered image recognition technology. Whether you're a seasoned botanist or a curious nature lover, our Plant Identification tool 
       will help you connect with the green world around you like never before. Start your plant 
       identification journey today and see your environment through new eyes!`,
     },
@@ -220,7 +249,7 @@ const Layouts = () => {
       case "3":
         return <Dashboard />;
       case "4":
-        return <Customers />;
+        return <Customers onTotalUsersChange={setTotalUsers} />;
       default:
         return (
           <>

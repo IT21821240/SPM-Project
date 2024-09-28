@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -23,9 +23,8 @@ import {
   Badge,
 } from "@mui/material";
 import { Search, GetApp, Refresh, Group } from "@mui/icons-material";
-import ImageOne from "../../../assets/loginPage_Image.jpg";
 
-const Customers = () => {
+const Customers = ({ onTotalUsersChange }) => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,6 +46,8 @@ const Customers = () => {
       );
       setUsers(response.data.users);
       setFilteredUsers(response.data.users);
+      onTotalUsersChange(response.data.users.length);
+      console.log(response.data.users.length); // Call the callback with the total users
     } catch (err) {
       setError(
         err.response?.data?.error || "An error occurred while fetching users."
