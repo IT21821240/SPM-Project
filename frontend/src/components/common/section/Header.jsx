@@ -1,19 +1,22 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaSignOutAlt } from "react-icons/fa";
 import Logout from "../section/Logout";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
   const dropdownRef = useRef(null);
+  const location = useLocation();
 
   const Navbar = [
     { name: "Home", link: "/userhome" },
     { name: "Plant", link: "/plant" },
     { name: "Disease", link: "/user-disease-list" },
     { name: "Detection", link: "/detection" },
+    { name: "Profile", link: "/profile" },
   ];
 
   useEffect(() => {
@@ -61,7 +64,11 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo section */}
-          <Link to="/" className="flex items-center" onClick={closeNavbar}>
+          <Link
+            to="/userhome"
+            className="flex items-center"
+            onClick={closeNavbar}
+          >
             <span className="text-2xl text-green-400 font-bold">
               Green Care
             </span>
@@ -73,9 +80,20 @@ const Header = () => {
               <Link
                 key={index}
                 to={item.link}
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out relative ${
+                  location.pathname === item.link ? "text-white" : ""
+                }`}
               >
                 {item.name}
+                {location.pathname === item.link && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
+                    layoutId="underline"
+                    initial={false}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
               </Link>
             ))}
           </div>
@@ -118,7 +136,10 @@ const Header = () => {
                     <div className="py-1">
                       <Logout onLogoutSuccess={handleLogoutSuccess}>
                         {({ logout }) => (
-                          <button onClick={logout}>
+                          <button
+                            onClick={logout}
+                            className="group flex items-center justify-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
+                          >
                             <FaSignOutAlt className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
                             Logout
                           </button>
@@ -150,7 +171,9 @@ const Header = () => {
             <Link
               key={index}
               to={item.link}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className={`text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium ${
+                location.pathname === item.link ? "bg-gray-700 text-white" : ""
+              }`}
               onClick={closeNavbar}
             >
               {item.name}

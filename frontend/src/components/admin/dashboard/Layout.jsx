@@ -13,7 +13,6 @@ import {
 } from "antd";
 import {
   HomeOutlined,
-  LogoutOutlined,
   WarningOutlined,
   UserOutlined,
   BranchesOutlined,
@@ -313,10 +312,7 @@ const Layouts = () => {
               )}
             </Col>
             <Col>
-              <StyledLogoutButton
-                icon={<LogoutOutlined />}
-                onClick={handleLogout}
-              >
+              <StyledLogoutButton onClick={handleLogout}>
                 Logout
               </StyledLogoutButton>
             </Col>
