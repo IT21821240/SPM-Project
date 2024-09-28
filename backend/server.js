@@ -4,6 +4,8 @@ const cors = require("cors");
 const UserRoute = require("./routes/UserRoute");
 const PlantRoute = require("./routes/plantRoute");
 const DiseaseRoute = require("./routes/diseaseRoute");
+const FeedbackRoute = require("./routes/feedbackRoute");
+const fertilizerRoutes = require("./routes/fertilizerRoute");
 const bodyParser = require("body-parser");
 
 require("dotenv").config();
@@ -17,6 +19,8 @@ app.use(bodyParser.json());
 app.use("/api/users", UserRoute);
 app.use("/api/plants", PlantRoute);
 app.use("/api/diseases", DiseaseRoute);
+app.use("/api/feedback", FeedbackRoute);
+app.use("/api/fertilizers", fertilizerRoutes);
 
 mongoose
   .connect(DB_URI)
