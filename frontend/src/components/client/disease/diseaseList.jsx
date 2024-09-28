@@ -58,7 +58,7 @@ const UserDiseaseList = () => {
     <>
       <Header />
       <div className="p-6 max-w-5xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200">
-        <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">
+        <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center mt-[60px]">
           Disease List
         </h2>
         {diseases.length > 0 ? (

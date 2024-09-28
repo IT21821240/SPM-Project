@@ -20,6 +20,10 @@ import UpdateDisease from "../components/admin/disease/UpdateDisease";
 import DiseaseList from "../components/admin/disease/DiseaseList";
 import UserDiseaseList from "../components/client/disease/diseaseList";
 
+// fertilizer
+import Fertilizer from "../components/client/detection/fertilizer";
+import Feedback from "../components/client/detection/feedback";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -28,6 +32,8 @@ const AppRoutes = () => {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/userhome" element={<UserHome />} />
       <Route path="/detection" element={<Detection />} />
+      <Route path="/feedback" element={<Feedback />} />
+      <Route path="/fertilizer" element={<Fertilizer />} />
       <Route path="/admindashboard" element={<Layout />} />
       <Route path="/admindashboard/customers" element={<Customers />} />
 

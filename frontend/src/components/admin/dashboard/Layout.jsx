@@ -20,8 +20,10 @@ import {
   BranchesOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  ExperimentOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import Fertilizer from "../fertilizer/displayFertilizer";
 import Customers from "../../admin/customers/Customers";
 import Dashboard from "../disease/Dashboard";
 import Home from "../plant/plantMain";
@@ -198,6 +200,7 @@ const Layouts = () => {
     { key: "2", icon: <BranchesOutlined />, label: "Plants" },
     { key: "3", icon: <WarningOutlined />, label: "Diseases" },
     { key: "4", icon: <UserOutlined />, label: "Customers" },
+    { key: "5", icon: <ExperimentOutlined />, label: "Fertilizers" },
   ];
 
   const cardData = [
@@ -250,6 +253,8 @@ const Layouts = () => {
         return <Dashboard />;
       case "4":
         return <Customers onTotalUsersChange={setTotalUsers} />;
+      case "5":
+        return <Fertilizer />;
       default:
         return (
           <>

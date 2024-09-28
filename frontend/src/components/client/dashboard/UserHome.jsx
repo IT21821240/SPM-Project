@@ -75,8 +75,8 @@ const UserHome = () => {
 };
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-md rounded-lg p-6 shadow-xl">
-    <div className="flex gap-6">
+  <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-md rounded-lg p-4   shadow-xl">
+    <div className="flex gap-3">
       <div className="text-info text-3xl mb-4">{icon}</div>
       <h3 className="text-white text-xl font-sans font-semibold mb-2">
         {title}

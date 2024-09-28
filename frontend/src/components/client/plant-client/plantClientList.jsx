@@ -61,7 +61,9 @@ const PlantClientList = () => {
             }}
           >
             <div className="container mx-auto px-4 py-24 relative ">
-              <h2 className="text-2xl font-bold mb-4">Plant List</h2>
+              <h2 className=" text-center text-2xl font-bold mb-4">
+                Plant List
+              </h2>
 
               <TextField
                 className=" shadow-md w-3/4"
